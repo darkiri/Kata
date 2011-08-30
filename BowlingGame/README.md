@@ -1,7 +1,7 @@
 Bowling Game
 ------------
 
-_http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata_
+_http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata_  
 _http://codingdojo.org/cgi-bin/wiki.pl?KataBowling_
 
 The game consists of 10 frames.  In each frame the player has
@@ -19,5 +19,5 @@ balls to complete the frame.  However no more than three balls can be rolled in
 tenth frame.
 
 The Program should not:
-	* check for correct number of rolls and frames;
-	* provide scores for intermediate frames
+    +    check for correct number of rolls and frames; 
+    +    provide scores for intermediate frames. 
