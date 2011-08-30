@@ -19,5 +19,5 @@ balls to complete the frame.  However no more than three balls can be rolled in
 tenth frame.
 
 The Program should not:  
-*    check for correct number of rolls and frames;  
-*    provide scores for intermediate frames. 
+ - check for correct number of rolls and frames;
+ - provide scores for intermediate frames. 
