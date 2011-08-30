@@ -3,4 +3,5 @@ bin/
 obj/
 _ReSharper.*/
 *ReSharper.User
-*.crunchproject.*.xml
+*.crunch*.xml
+*.crunch*.cache
