@@ -1,18 +1,40 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Web Developer Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowlingGame", "BowlingGame\BowlingGame.csproj", "{DAFCF49B-9F17-4F1B-B133-760A96862C32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringReplacer", "StringReplacer\StringReplacer.csproj", "{F4571937-45F0-4A40-840F-B5945427E92C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DAFCF49B-9F17-4F1B-B133-760A96862C32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DAFCF49B-9F17-4F1B-B133-760A96862C32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAFCF49B-9F17-4F1B-B133-760A96862C32}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DAFCF49B-9F17-4F1B-B133-760A96862C32}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DAFCF49B-9F17-4F1B-B133-760A96862C32}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{DAFCF49B-9F17-4F1B-B133-760A96862C32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAFCF49B-9F17-4F1B-B133-760A96862C32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAFCF49B-9F17-4F1B-B133-760A96862C32}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DAFCF49B-9F17-4F1B-B133-760A96862C32}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DAFCF49B-9F17-4F1B-B133-760A96862C32}.Release|x86.ActiveCfg = Release|Any CPU
+		{F4571937-45F0-4A40-840F-B5945427E92C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{F4571937-45F0-4A40-840F-B5945427E92C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{F4571937-45F0-4A40-840F-B5945427E92C}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{F4571937-45F0-4A40-840F-B5945427E92C}.Debug|x86.ActiveCfg = Debug|x86
+		{F4571937-45F0-4A40-840F-B5945427E92C}.Debug|x86.Build.0 = Debug|x86
+		{F4571937-45F0-4A40-840F-B5945427E92C}.Release|Any CPU.ActiveCfg = Release|x86
+		{F4571937-45F0-4A40-840F-B5945427E92C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{F4571937-45F0-4A40-840F-B5945427E92C}.Release|Mixed Platforms.Build.0 = Release|x86
+		{F4571937-45F0-4A40-840F-B5945427E92C}.Release|x86.ActiveCfg = Release|x86
+		{F4571937-45F0-4A40-840F-B5945427E92C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
