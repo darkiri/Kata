@@ -11,6 +11,13 @@ Create a method that takes a string and a dictionary, and replaces every key in 
 	Output:		Hello, World!
 
 
+Key may contain letters and numbers. That said, ordinal dollar signs in the string should not influence the output.
+
+	Dictionary:	...
+	Input:		30$ and 40$
+	Output:		30$ and 40$
+
+
 When _$..$_ placeholder in the string not found in the dictionary then it should be removed from the string.
 
 	Dictionary:	[AnotherName:World]
