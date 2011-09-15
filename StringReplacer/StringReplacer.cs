@@ -20,10 +20,6 @@ namespace StringReplacer {
                 "Hallo, $Name$!", "Hallo, Welt!"
             },
             new object[] {
-                new Dictionary<string, string> {{"Name", "Welt"}},
-                "Hallo, $Name$!", "Hallo, Welt!"
-            },
-            new object[] {
                 new Dictionary<string, string> {{"Name1", "Welt"}, {"Name2", "Hölle"}},
                 "Hallo, $Name1$ und $Name2$!", "Hallo, Welt und Hölle!"
             },
