@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
 
 namespace Potter
@@ -9,57 +7,72 @@ namespace Potter
     [TestFixture]
     public class PotterTests
     {
-        [TestCaseSource("_booksAndPrices")]
-        public void CalculatePriceTest(Dictionary<Potter, int> books, double price) {
-            var calc = new PriceCalculater();
-            Assert.That(calc.GetPrice(books), Is.EqualTo(price));
+        private void AssertCalculatePrice(Dictionary<Potter, int> soldBooks, double expectedPrice) {
+            var calc = new PriceCalculator();
+            Assert.That(calc.GetPrice(soldBooks), Is.EqualTo(expectedPrice));
         }
 
-        private static object[] _booksAndPrices = {
-            new object[] {new Dictionary<Potter, int>(), 0},
-            new object[] {new Dictionary<Potter, int>{{Potter.Book1, 1}}, 8},
-            new object[] {new Dictionary<Potter, int>{
-                {Potter.Book1, 2},
-            }, 8*2},
-            new object[] {new Dictionary<Potter, int>{
+        [Test]
+        public void NoBooksNoPrice() {
+            AssertCalculatePrice(new Dictionary<Potter, int>(), 0);
+        }
+
+        [Test]
+        public void SingleBookCostEightEuro() {
+            AssertCalculatePrice(new Dictionary<Potter, int> { { Potter.Book1, 1 } }, 8);
+        }
+
+        [Test]
+        public void TwoSameCopiesHaveNoDiscount() {
+            AssertCalculatePrice(new Dictionary<Potter, int> { { Potter.Book1, 2 } }, 8 * 2);
+        }
+
+        [Test]
+        public void TwoDifferentBooksHaveDiscount_5Percent() {
+            AssertCalculatePrice(new Dictionary<Potter, int> {
                 {Potter.Book1, 2},
                 {Potter.Book2, 1},
-            }, 2*8*.95 + 8},
-            new object[] {new Dictionary<Potter, int>{
-                {Potter.Book1, 2},
-                {Potter.Book2, 2},
-            }, 2*8*.95 + 2*8*.95},            
-            new object[] {new Dictionary<Potter, int>{
+            }, 2 * 8 * .95 + 8);
+        }
+
+        [Test]
+        public void ThreeDifferentBooksHaveDiscount_10Percent() {
+            AssertCalculatePrice(new Dictionary<Potter, int> {
                 {Potter.Book1, 2},
                 {Potter.Book2, 2},
                 {Potter.Book3, 1},
-            }, 3*8*.9 + 2*8*.95},
-            new object[] {new Dictionary<Potter, int>{
+            }, 3 * 8 * .9 + 2 * 8 * .95);
+        }
+
+        [Test]
+        public void OnlyDifferentBooksHaveDiscount() {
+            AssertCalculatePrice(new Dictionary<Potter, int> {
                 {Potter.Book1, 2},
                 {Potter.Book2, 2},
                 {Potter.Book3, 3},
-            }, 3*8*.9 + 3*8*.9 + 1*8},
-            new object[] {new Dictionary<Potter, int>{
+            }, 3 * 8 * .9 + 3 * 8 * .9 + 1 * 8);
+        }
+
+        [Test]
+        public void FourDifferentBooksHaveDiscount_20Percent() {
+            AssertCalculatePrice(new Dictionary<Potter, int> {
                 {Potter.Book1, 4},
                 {Potter.Book2, 3},
                 {Potter.Book3, 2},
                 {Potter.Book4, 1},
-            }, 4*8*.8 + 3*8*.9 + 2*8*.95 + 1*8},
-            new object[] {new Dictionary<Potter, int>{
+            }, 4 * 8 * .8 + 3 * 8 * .9 + 2 * 8 * .95 + 1 * 8);
+        }
+
+        [Test]
+        public void FiveDifferentBooksHaveDiscount_25Percent() {
+            AssertCalculatePrice(new Dictionary<Potter, int> {
                 {Potter.Book1, 4},
-                {Potter.Book2, 3},
-                {Potter.Book3, 2},
-                {Potter.Book4, 1},
-                {Potter.Book5, 1},
-            }, 5*8*.75 + 3*8*.9 + 2*8*.95 + 1*8},
-            new object[] {new Dictionary<Potter, int>{
-                {Potter.Book1, 2},
                 {Potter.Book2, 2},
-                {Potter.Book3, 2},
+                {Potter.Book3, 1},
                 {Potter.Book4, 1},
                 {Potter.Book5, 1},
-            }, 5*8*.75+3*8*.9},
-        };
+            }, 5 * 8 * .75 + 2 * 8 * .95 + 2 * 8);
+        }        
     }
 
     public enum Potter {
@@ -70,7 +83,7 @@ namespace Potter
         Book5
     }
 
-    public class PriceCalculater
+    public class PriceCalculator
     {
         private const double PRICE_PER_ITEM = 8;
 
