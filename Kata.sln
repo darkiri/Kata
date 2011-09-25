@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Web Developer Express 2010
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowlingGame", "BowlingGame\BowlingGame.csproj", "{DAFCF49B-9F17-4F1B-B133-760A96862C32}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringReplacer", "StringReplacer\StringReplacer.csproj", "{F4571937-45F0-4A40-840F-B5945427E92C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Potter", "Potter\Potter.csproj", "{80AE6002-A952-488E-A44F-370E869F98C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCalculator", "TaxCalculator\TaxCalculator.csproj", "{C228521E-06E4-44A3-89AC-34112A141431}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,16 @@ Global
 		{80AE6002-A952-488E-A44F-370E869F98C3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{80AE6002-A952-488E-A44F-370E869F98C3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{80AE6002-A952-488E-A44F-370E869F98C3}.Release|x86.ActiveCfg = Release|Any CPU
+		{C228521E-06E4-44A3-89AC-34112A141431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C228521E-06E4-44A3-89AC-34112A141431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C228521E-06E4-44A3-89AC-34112A141431}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C228521E-06E4-44A3-89AC-34112A141431}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C228521E-06E4-44A3-89AC-34112A141431}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C228521E-06E4-44A3-89AC-34112A141431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C228521E-06E4-44A3-89AC-34112A141431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C228521E-06E4-44A3-89AC-34112A141431}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C228521E-06E4-44A3-89AC-34112A141431}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C228521E-06E4-44A3-89AC-34112A141431}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
