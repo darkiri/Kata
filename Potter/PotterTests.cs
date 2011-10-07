@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Potter {
     [TestFixture]
     public class PotterTests {
         private void AssertCalculatePrice(Dictionary<Potter, int> soldBooks, double expectedPrice) {
-            var calc = new PriceCalculator();
+            var calc = new GreedyPriceCalculator();
             Assert.That(calc.GetPrice(soldBooks), Is.EqualTo(expectedPrice));
         }
 
@@ -93,67 +93,26 @@ namespace Potter {
                 {Potter.Book5, 2},
             }, 4*8*.8 + 4*8*.8 + 4*8*.8 + 4*8*.8);
         }
+
+        [Test]
+        public void UpTo30BooksShouldBeSold()
+        {
+            AssertCalculatePrice(new Dictionary<Potter, int> {
+                {Potter.Book1, 7},
+                {Potter.Book2, 7},
+                {Potter.Book3, 7},
+                {Potter.Book4, 4},
+                {Potter.Book5, 5},
+            }, 2*5*8*.75 + 5*4*8*.8);
+        }
     }
 
+    [Flags]
     public enum Potter {
         Book1,
         Book2,
         Book3,
         Book4,
         Book5
-    }
-
-    public class PriceCalculator {
-        private const double PRICE_PER_ITEM = 8;
-
-        public double GetPrice(Dictionary<Potter, int> books) {
-            var sortedPerDiscount = SortBooks(books, new List<Dictionary<Potter, int>>());
-            return OptimizeDiscounts(sortedPerDiscount).Sum(s => PricePerPile(s));
-        }
-
-        private IEnumerable<Dictionary<Potter, int>> OptimizeDiscounts(IEnumerable<Dictionary<Potter, int>> books) {
-            return books.Any(pile => pile.Count == 5) &&
-                   books.Any(pile => pile.Count == 3)
-                       ? OptimizeDiscounts(Optimize5And3Piles(books))
-                       : books;
-        }
-
-        private IEnumerable<Dictionary<Potter, int>> Optimize5And3Piles(IEnumerable<Dictionary<Potter, int>> books) {
-            var fiveBooksPile = books.First(b => b.Count == 5);
-            var threeBooksPile = books.First(b => b.Count == 3);
-            var bookToMove = fiveBooksPile.First(b => !threeBooksPile.Keys.Contains(b.Key));
-            fiveBooksPile.Remove(bookToMove.Key);
-            threeBooksPile[bookToMove.Key] = bookToMove.Value;
-            return books;
-        }
-
-        private double PricePerPile(Dictionary<Potter, int> books) {
-            return books.Sum(b => b.Value*PRICE_PER_ITEM)*GetDiscount(books.Count());
-        }
-
-        public IEnumerable<Dictionary<Potter, int>> SortBooks(Dictionary<Potter, int> notYetSorted,
-                                                              List<Dictionary<Potter, int>> sortedPerDiscount) {
-            var newPile = notYetSorted.ToDictionary(b => b.Key, b => 1);
-            var remain = notYetSorted.Where(b => b.Value > 1).ToDictionary(b => b.Key, b => b.Value - 1);
-
-            sortedPerDiscount.Add(newPile);
-            return remain.Count > 0
-                       ? SortBooks(remain, sortedPerDiscount)
-                       : sortedPerDiscount;
-        }
-
-        public double GetDiscount(int bookCount) {
-            if (bookCount == 5) {
-                return .75;
-            } else if (bookCount == 4) {
-                return .80;
-            } else if (bookCount == 3) {
-                return .90;
-            } else if (bookCount == 2) {
-                return .95;
-            } else {
-                return 1;
-            }
-        }
     }
 }
