@@ -10,9 +10,17 @@ namespace Potter
         public Pile(IEnumerable<Potter> books)
         {
             _books = books.ToList();
+            UpdateHash();
+        }
+
+        private void UpdateHash()
+        {
+            _hash = (int) Books.OrderBy(b => b).Aggregate((Potter) 0, (a, b) => a | b);
         }
 
         private readonly List<Potter> _books;
+        private int _hash;
+
         public IEnumerable<Potter> Books
         {
             get { return _books; }
@@ -26,11 +34,13 @@ namespace Potter
         public void Add(Potter book)
         {
             _books.Add(book);
+            UpdateHash();
         }
 
         public void Remove(Potter book)
         {
             _books.Remove(book);
+            UpdateHash();
         }
 
         public double GetPrice()
@@ -62,14 +72,14 @@ namespace Potter
             }
         }
 
-        public bool ShouldAdd(Potter aBook)
+        public bool Contains(Potter aBook)
         {
-            return !Books.Contains(aBook);
+            return Books.Contains(aBook);
         }
 
-        public int GetHash()
+        public int GetVolatileHash()
         {
-            return (int)Books.OrderBy(b=>b).Aggregate((Potter)0, (a, b) => a | b);
+            return _hash;
         }
     }
 }

@@ -6,15 +6,18 @@ namespace Potter
     public class Variant
     {
         private readonly List<Pile> _piles;
+        private int[] _hashes;
 
         public Variant(IEnumerable<Pile> piles)
         {
             _piles = piles.ToList();
+            UpdateHashes();
         }
 
         public Variant()
         {
             _piles = new List<Pile>();
+            UpdateHashes();
         }
 
         public IEnumerable<Pile> Piles {get { return _piles; }}
@@ -22,6 +25,7 @@ namespace Potter
         public void Add(Pile newPile)
         {
             _piles.Add(newPile);
+            UpdateHashes();
         }
 
         public double GetPrice()
@@ -29,28 +33,29 @@ namespace Potter
             return Piles.Sum(s => s.GetPrice());
         }
 
-        public bool Equivalent(Variant variant)
+        public bool Equals(Variant variant)
         {
             if (Piles.Count() != variant.Piles.Count())
             {
                 return false;
             }
-            var myHashes = Piles
-                .Select(p => p.GetHash())
-                .OrderBy(h => h)
-                .ToArray();
-            var otherHashes = variant.Piles
-                .Select(p => p.GetHash())
-                .OrderBy(h => h)
-                .ToArray();
-            for (var i = 0; i < myHashes.Count(); i++)
+            
+            for (var i = 0; i < _hashes.Count(); i++)
             {
-                if (myHashes[i] != otherHashes[i])
+                if (_hashes[i] != variant._hashes[i])
                 {
                     return false;
                 }
             }
             return true;
+        }
+
+        private void UpdateHashes()
+        {
+            _hashes = Piles
+                                 .Select(p => p.GetVolatileHash())
+                                 .OrderBy(h => h)
+                                 .ToArray();
         }
     }
 }

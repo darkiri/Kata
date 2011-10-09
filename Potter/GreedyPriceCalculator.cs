@@ -6,8 +6,11 @@ namespace Potter
 {
     internal class GreedyPriceCalculator
     {
+        private int _maxPiles;
+
         public double GetPrice(Dictionary<Potter, int> books)
         {
+            _maxPiles = books.Count > 0 ? books.Values.Max() : 0;
             var allPriceVariants = GetAllPriceVariants(books, new Variant[0]).ToArray();
             Console.Out.WriteLine("Variants Count for {0} books: {1}", books.Values.Sum(), allPriceVariants.Count());
             return allPriceVariants.Count() > 0 ? allPriceVariants.Min(v=>v.GetPrice()) : 0;
@@ -23,9 +26,7 @@ namespace Potter
                     .Where(b => b.Value > 0)
                     .ToDictionary(b => b.Key, b => b.Value);
 
-                variants = GenerateVariants(variants, aBook);
-
-                return GetAllPriceVariants(remain, variants);
+                return GetAllPriceVariants(remain, GenerateVariants(variants, aBook));
             }
             else
             {
@@ -38,23 +39,15 @@ namespace Potter
             var newVariants = new List<Variant>();
             foreach (var curVariant in variants)
             {
-                foreach (var curPile in curVariant.Piles)
+                foreach (var newVariant in GenerateVariants(curVariant, aBook, newVariants))
                 {
-                    if (curPile.ShouldAdd(aBook))
-                    {
-                        var newVariant = CreateNewVariant(curVariant, curPile, aBook);
-
-                        if (newVariants.All(v => !v.Equivalent(newVariant)))
-                        {
-                            newVariants.Add(newVariant);                            
-                        }
-                    }
+                    newVariants.Add(newVariant);
                 }
-                if (newVariants.All(v => v.Piles.All(p => p.Books.Count(b => b != aBook) > 1)))
+                if (curVariant.Piles.Count() < _maxPiles)
                 {
-                    var variantWithANewSmallPile = new Variant(curVariant.Piles);
-                    variantWithANewSmallPile.Add(new Pile(new[] {aBook}));
-                    newVariants.Add(variantWithANewSmallPile);
+                    var variantWithASignelBook = new Variant(curVariant.Piles);
+                    variantWithASignelBook.Add(new Pile(new[] {aBook}));
+                    newVariants.Add(variantWithASignelBook);
                 }
             }
             if (newVariants.Count() == 0)
@@ -64,11 +57,19 @@ namespace Potter
             return newVariants;
         }
 
-        private static Variant CreateNewVariant(Variant curVariant, Pile pile2Add, Potter aBook)
+        private static IEnumerable<Variant> GenerateVariants(Variant variant, Potter aBook, IEnumerable<Variant> alreadyGenerated)
         {
-            var newPile = new Pile(pile2Add.Books);
+            return variant.Piles
+                .Where(pile => !pile.Contains(aBook))
+                .Select(pile => CreateNewVariant(variant, pile, aBook))
+                .Where(newVariant => alreadyGenerated.All(v => !v.Equals(newVariant)));
+        }
+
+        private static Variant CreateNewVariant(Variant variant, Pile selectedPile, Potter aBook)
+        {
+            var newPile = new Pile(selectedPile.Books);
             newPile.Add(aBook);
-            var newVariant = new Variant(curVariant.Piles.Where(p => p != pile2Add));
+            var newVariant = new Variant(variant.Piles.Where(p => p != selectedPile));
             newVariant.Add(newPile);
             return newVariant;
         }

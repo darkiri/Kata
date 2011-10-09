@@ -5,9 +5,9 @@ using NUnit.Framework;
 namespace Potter {
     [TestFixture]
     public class PotterTests {
-        private void AssertCalculatePrice(Dictionary<Potter, int> soldBooks, double expectedPrice) {
+        private static void AssertCalculatePrice(Dictionary<Potter, int> soldBooks, double expectedPrice) {
             var calc = new GreedyPriceCalculator();
-            Assert.That(calc.GetPrice(soldBooks), Is.EqualTo(expectedPrice));
+            Assert.That(calc.GetPrice(soldBooks), Is.EqualTo(expectedPrice).Within(.000001));
         }
 
         [Test]
@@ -104,6 +104,18 @@ namespace Potter {
                 {Potter.Book4, 4},
                 {Potter.Book5, 5},
             }, 2*5*8*.75 + 5*4*8*.8);
+        }
+
+        [Test(Description = "Combinatorial explosion with the greedy calculator")]
+        public static void UpTo132BooksShouldBeSold()
+        {
+            AssertCalculatePrice(new Dictionary<Potter, int> {
+                {Potter.Book1, 32},
+                {Potter.Book2, 30},
+                {Potter.Book3, 30},
+                {Potter.Book4, 20},
+                {Potter.Book5, 20},
+            }, 10*5*8*.75 + 20*4*8*.8 + 2*8);
         }
     }
 
