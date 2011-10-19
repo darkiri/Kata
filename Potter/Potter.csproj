@@ -52,7 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GreedyPriceCalculator.cs" />
+    <Compile Include="ExpansivePriceCalculator.cs" />
     <Compile Include="Pile.cs" />
     <Compile Include="PotterTests.cs" />
     <Compile Include="PragmaticPriceCalculator.cs" />

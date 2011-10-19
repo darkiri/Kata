@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Potter
 {
-    internal class GreedyPriceCalculator
+    internal class ExpansivePriceCalculator
     {
         private int _maxPiles;
 

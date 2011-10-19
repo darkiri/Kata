@@ -2,40 +2,49 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace Potter {
+namespace Potter 
+{
     [TestFixture]
     public class PotterTests {
-        private static void AssertCalculatePrice(Dictionary<Potter, int> soldBooks, double expectedPrice) {
-            var calc = new GreedyPriceCalculator();
+        private static void AssertCalculatePrice(Dictionary<Potter, int> soldBooks, double expectedPrice) 
+        {
+            var calc = new ExpansivePriceCalculator();
             Assert.That(calc.GetPrice(soldBooks), Is.EqualTo(expectedPrice).Within(.000001));
         }
 
         [Test]
-        public void NoBooksNoPrice() {
+        public void NoBooksNoPrice() 
+        {
             AssertCalculatePrice(new Dictionary<Potter, int>(), 0);
         }
 
         [Test]
-        public void SingleBookCostEightEuro() {
+        public void SingleBookCostEightEuro() 
+        {
             AssertCalculatePrice(new Dictionary<Potter, int> { { Potter.Book1, 1 } }, 8);
         }
 
         [Test]
-        public void TwoSameCopiesHaveNoDiscount() {
+        public void TwoSameCopiesHaveNoDiscount() 
+        {
             AssertCalculatePrice(new Dictionary<Potter, int> { { Potter.Book1, 2 } }, 8 * 2);
         }
 
         [Test]
-        public void TwoDifferentBooksHaveDiscount_5Percent() {
-            AssertCalculatePrice(new Dictionary<Potter, int> {
+        public void TwoDifferentBooksHaveDiscount_5Percent() 
+        {
+            AssertCalculatePrice(new Dictionary<Potter, int> 
+            {
                 {Potter.Book1, 2},
                 {Potter.Book2, 1},
             }, 2 * 8 * .95 + 8);
         }
 
         [Test]
-        public void ThreeDifferentBooksHaveDiscount_10Percent() {
-            AssertCalculatePrice(new Dictionary<Potter, int> {
+        public void ThreeDifferentBooksHaveDiscount_10Percent() 
+        {
+            AssertCalculatePrice(new Dictionary<Potter, int> 
+            {
                 {Potter.Book1, 2},
                 {Potter.Book2, 2},
                 {Potter.Book3, 1},
@@ -43,8 +52,10 @@ namespace Potter {
         }
 
         [Test]
-        public void OnlyDifferentBooksHaveDiscount() {
-            AssertCalculatePrice(new Dictionary<Potter, int> {
+        public void OnlyDifferentBooksHaveDiscount() 
+        {
+            AssertCalculatePrice(new Dictionary<Potter, int> 
+            {
                 {Potter.Book1, 2},
                 {Potter.Book2, 2},
                 {Potter.Book3, 3},
@@ -52,8 +63,10 @@ namespace Potter {
         }
 
         [Test]
-        public void FourDifferentBooksHaveDiscount_20Percent() {
-            AssertCalculatePrice(new Dictionary<Potter, int> {
+        public void FourDifferentBooksHaveDiscount_20Percent() 
+        {
+            AssertCalculatePrice(new Dictionary<Potter, int> 
+            {
                 {Potter.Book1, 4},
                 {Potter.Book2, 3},
                 {Potter.Book3, 2},
@@ -62,8 +75,10 @@ namespace Potter {
         }
 
         [Test]
-        public void FiveDifferentBooksHaveDiscount_25Percent() {
-            AssertCalculatePrice(new Dictionary<Potter, int> {
+        public void FiveDifferentBooksHaveDiscount_25Percent() 
+        {
+            AssertCalculatePrice(new Dictionary<Potter, int> 
+            {
                 {Potter.Book1, 4},
                 {Potter.Book2, 2},
                 {Potter.Book3, 1},
@@ -84,8 +99,10 @@ namespace Potter {
         }
 
         [Test]
-        public void FourFourFourFourCheaperAsFiveThreeFiveThree() {
-            AssertCalculatePrice(new Dictionary<Potter, int> {
+        public void FourFourFourFourCheaperAsFiveThreeFiveThree() 
+        {
+            AssertCalculatePrice(new Dictionary<Potter, int> 
+            {
                 {Potter.Book1, 4},
                 {Potter.Book2, 4},
                 {Potter.Book3, 4},
@@ -109,7 +126,8 @@ namespace Potter {
         [Test(Description = "Combinatorial explosion with the greedy calculator")]
         public static void UpTo132BooksShouldBeSold()
         {
-            AssertCalculatePrice(new Dictionary<Potter, int> {
+            AssertCalculatePrice(new Dictionary<Potter, int> 
+            {
                 {Potter.Book1, 32},
                 {Potter.Book2, 30},
                 {Potter.Book3, 30},
@@ -120,7 +138,8 @@ namespace Potter {
     }
 
     [Flags]
-    public enum Potter {
+    public enum Potter 
+    {
         Book1,
         Book2,
         Book3,
