@@ -5,3 +5,5 @@ _ReSharper.*/
 *ReSharper.User
 *.crunch*.xml
 *.crunch*.cache
+*.feature.cs
+*.dotCover
