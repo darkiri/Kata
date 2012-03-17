@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaxCalculator", "TaxCalcula
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowlingGame.Features", "BowlingGame.Features\BowlingGame.Features.csproj", "{0A6981C7-A1FF-4D5C-B7CA-C47EC19ADEB1}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "StopLoss", "StopLoss\StopLoss.fsproj", "{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,16 @@ Global
 		{0A6981C7-A1FF-4D5C-B7CA-C47EC19ADEB1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0A6981C7-A1FF-4D5C-B7CA-C47EC19ADEB1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0A6981C7-A1FF-4D5C-B7CA-C47EC19ADEB1}.Release|x86.ActiveCfg = Release|Any CPU
+		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
