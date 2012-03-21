@@ -2,13 +2,13 @@
 open Xunit
 
 type Message = 
-    | Update of int
+    | UpdatePrice of int
+    | DelayRaise
+    | DoRaise
+    | DelayFall
+    | DoFall
     | Sell of int
-    | DelayRaise of int
-    | Raise
-    | DelayFall of int
-    | Fall
-    | Remove
+    | RemoveStopLoss
 
 type Supervisor(delayWorker, sellWorker) =
     let delayWorker = delayWorker
@@ -18,12 +18,14 @@ type Supervisor(delayWorker, sellWorker) =
 
     member this.send message =
         match message with
-        | Update _ 
-        | Remove 
-        | Raise 
-        | Fall          -> stopLossWorker this message
+        | UpdatePrice _ 
+        | DoRaise 
+        | DoFall
+        | RemoveStopLoss -> stopLossWorker this message
+
         | DelayRaise _
         | DelayFall _   -> delayWorker this message
+
         | Sell _        -> sellWorker this message
 
     member this.spawn_stop_loss worker =
@@ -35,61 +37,61 @@ let rec stop_loss_worker actualPrice (env:Supervisor) msg =
     let spawn_empty = fun () -> env.spawn_stop_loss (fun env msg -> ())
 
     match msg with
-    | Update(price) when price > actualPrice -> env.send (DelayRaise 15); spawn_me price
-    | Update(price) when price < actualPrice -> env.send (DelayFall 30); spawn_me price
-    | Fall
-    | Remove        -> env.send (Sell actualPrice); spawn_empty()
-    | Raise
+    | UpdatePrice(newPrice) when newPrice > actualPrice -> env.send DelayRaise; spawn_me newPrice
+    | UpdatePrice(newPrice) when newPrice < actualPrice -> env.send DelayFall; spawn_me newPrice
+    | DoFall
+    | RemoveStopLoss        -> env.send (Sell actualPrice); spawn_empty()
+    | DoRaise
     | _             -> ()
 
 
-let stop_loss_worker_10 = stop_loss_worker 10
+let worker_10 = stop_loss_worker 10
 
 [<Fact>]
-let ``price doesn't change nothing happens`` () =
+let ``price doesn't change -> nothing happens`` () =
     let called = ref false
     let theMock env msg =
         called := true
         
     let env = Supervisor(theMock, theMock)
 
-    env.spawn_stop_loss stop_loss_worker_10
-    env.send (Update 10)
+    env.spawn_stop_loss worker_10
+    env.send (UpdatePrice 10)
 
     Assert.False !called
 
 [<Fact>]
-let ``price changed from 10 to 11 -> stop loss should wait 15 sek`` () =
+let ``price changed from 10 to 11 -> stop loss has raise delay`` () =
     let called = ref false
     let delayWorkerMock env msg = 
-        Assert.Equal(DelayRaise(15), msg)
+        Assert.Equal(DelayRaise, msg)
         called := true
     let sellWorkerMock env msg = ()
 
     let env = Supervisor(delayWorkerMock, sellWorkerMock)
 
-    env.spawn_stop_loss stop_loss_worker_10
-    env.send (Update 11)
+    env.spawn_stop_loss worker_10
+    env.send (UpdatePrice 11)
 
     Assert.True !called
 
 [<Fact>]
-let ``price changed from 10 to 9 -> stop loss should wait 30 sek`` () =
+let ``price changed from 10 to 9 -> stop loss has fall delay`` () =
     let called = ref false
     let delayWorkerMock env msg = 
-        Assert.Equal(DelayFall(30), msg)
+        Assert.Equal(DelayFall, msg)
         called := true
     let sellWorkerMock env msg = ()
 
     let env = Supervisor(delayWorkerMock, sellWorkerMock)
 
-    env.spawn_stop_loss stop_loss_worker_10
-    env.send (Update 9)
+    env.spawn_stop_loss worker_10
+    env.send (UpdatePrice 9)
 
     Assert.True !called
 
 [<Fact>]
-let ``after 15 sek growth the stop loss should be raised`` () =
+let ``after raise delay the stop loss should be raised`` () =
     let called = ref false
     let delayWorkerMock env prices = ()
     let sellWorkerMock env msg = 
@@ -98,15 +100,18 @@ let ``after 15 sek growth the stop loss should be raised`` () =
 
     let env = Supervisor(delayWorkerMock, sellWorkerMock)
 
-    env.spawn_stop_loss stop_loss_worker_10
-    env.send (Update 11)
-    env.send Raise
-    env.send Remove
+    env.spawn_stop_loss worker_10
+    env.send (UpdatePrice 11)
+    env.send DoRaise
+
+    Assert.False !called
+
+    env.send RemoveStopLoss
 
     Assert.True !called
 
 [<Fact>]
-let ``after 30 sek fall the stop loss should be sold`` () =
+let ``after fall delay the stop loss should be sold`` () =
     let called = ref false
     let delayWorkerMock env prices = ()
     let sellWorkerMock env msg = 
@@ -115,14 +120,14 @@ let ``after 30 sek fall the stop loss should be sold`` () =
 
     let env = Supervisor(delayWorkerMock, sellWorkerMock)
 
-    env.spawn_stop_loss stop_loss_worker_10
-    env.send (Update 9)
-    env.send Fall
+    env.spawn_stop_loss worker_10
+    env.send (UpdatePrice 9)
+    env.send DoFall
 
     Assert.True !called
 
 [<Fact>]
-let ``price 10 change to 11 - earlier as 15 sek change to 9 - after 30 sek should be sold for 9`` () =
+let ``price 10 change to 11 with raise delay then to 9 with long fall delay -> should be sold for 9`` () =
     let called = ref false
     let delayWorkerMock env prices = ()
     let sellWorkerMock env msg = 
@@ -131,17 +136,17 @@ let ``price 10 change to 11 - earlier as 15 sek change to 9 - after 30 sek shoul
 
     let env = Supervisor(delayWorkerMock, sellWorkerMock)
 
-    env.spawn_stop_loss stop_loss_worker_10
-    env.send (Update 11)
-    env.send (Update 9)
-    env.send Raise
-    env.send Fall
+    env.spawn_stop_loss worker_10
+    env.send (UpdatePrice 11)
+    env.send (UpdatePrice 9)
+    env.send DoRaise
+    env.send DoFall
 
     Assert.True !called
 
 
 [<Fact>]
-let ``price 10 change to 9 - earlier as 30 sek change to 11 - after 30 sek should be sold for 11`` () =
+let ``price 10 change to 9 with long fall delay then to 11 -> should be sold for 11`` () =
     let called = ref false
     let delayWorkerMock env prices = ()
     let sellWorkerMock env msg = 
@@ -150,15 +155,15 @@ let ``price 10 change to 9 - earlier as 30 sek change to 11 - after 30 sek shoul
 
     let env = Supervisor(delayWorkerMock, sellWorkerMock)
 
-    env.spawn_stop_loss stop_loss_worker_10
-    env.send (Update 9)
-    env.send (Update 11)
-    env.send Fall
+    env.spawn_stop_loss worker_10
+    env.send (UpdatePrice 9)
+    env.send (UpdatePrice 11)
+    env.send DoFall
 
     Assert.True !called
 
 [<Fact>]
-let ``price 10 change to 9 - right away change to 11 - after 30 sek should be sold for 11`` () =
+let ``price 10 change to 9 right away change to 11 - after long fall delay should be sold for 11`` () =
     let called = ref false
     let delayWorkerMock env prices = ()
     let sellWorkerMock env msg = 
@@ -167,10 +172,10 @@ let ``price 10 change to 9 - right away change to 11 - after 30 sek should be so
 
     let env = Supervisor(delayWorkerMock, sellWorkerMock)
 
-    env.spawn_stop_loss stop_loss_worker_10
-    env.send (Update 9)
-    env.send (Update 11)
-    env.send Raise
-    env.send Fall
+    env.spawn_stop_loss worker_10
+    env.send (UpdatePrice 9)
+    env.send (UpdatePrice 11)
+    env.send DoRaise
+    env.send DoFall
 
     Assert.True !called
