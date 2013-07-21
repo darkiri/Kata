@@ -1,8 +1,11 @@
 *.suo
 bin/
 obj/
+Release/
+Debug/
 _ReSharper.*/
 *ReSharper.User
+*.vcxproj.user
 *.crunch*.xml
 *.crunch*.cache
 *.feature.cs
