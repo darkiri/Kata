@@ -1,7 +1,7 @@
 #ifndef FIZZ_BUZZ
 #define FIZZ_BUZZ
 
-#include <xstring>
+#include <string>
 #include <cppunit/extensions/HelperMacros.h>
 
 using namespace std;
