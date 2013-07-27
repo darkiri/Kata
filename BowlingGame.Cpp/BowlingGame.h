@@ -10,17 +10,23 @@ namespace BowlingGame {
 
 	class BowlingGame {
 		public:
-			void Roll(const int);
-			const int Score() const;
+			void roll(const int);
+			int score() const;
+
+			BowlingGame() {
+				cur_roll = &pins[0];
+			}
 		private:
-			vector<int> _pins;
-			const tuple<int, int> GetFrame(const int num) const;
-			const int ScoreFrame(const int frame) const;
-			const bool IsSpare(const int frame) const;
-			const bool IsStrike(const int frame) const;
-			const int ScoreNormal(const int frame) const;
-			const int ScoreSpare(const int frame) const;
-			const int ScoreStrike(const int frame) const;
+			int pins[23];
+			int* cur_roll;
+
+			tuple<int, int> get_frame(int num) const;
+			int score_frame(int frame) const;
+			bool is_spare(int frame) const;
+			bool is_strike(int frame) const;
+			int score_normal(int frame) const;
+			int score_spare(int frame) const;
+			int score_strike(int frame) const;
 	};
 
 	class BowlingGameTests : public CPPUNIT_NS::TestFixture {
