@@ -5,6 +5,7 @@ Release/
 Debug/
 _ReSharper.*/
 *ReSharper.User
+*.DotSettings.User
 *.vcxproj.user
 *.crunch*.xml
 *.crunch*.cache
