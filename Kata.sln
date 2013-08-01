@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowlingGame", "BowlingGame\BowlingGame.csproj", "{DAFCF49B-9F17-4F1B-B133-760A96862C32}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StringReplacer", "StringReplacer\StringReplacer.csproj", "{F4571937-45F0-4A40-840F-B5945427E92C}"
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowlingGame.Features", "BowlingGame.Features\BowlingGame.Features.csproj", "{0A6981C7-A1FF-4D5C-B7CA-C47EC19ADEB1}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "StopLoss", "StopLoss\StopLoss.fsproj", "{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArraySort", "ArraySort\ArraySort.csproj", "{68AA7EC8-D7C5-4BD1-B768-229A6246234C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,16 @@ Global
 		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{505CCBEA-B98E-41AA-AD7D-D4F02C97D540}.Release|x86.ActiveCfg = Release|Any CPU
+		{68AA7EC8-D7C5-4BD1-B768-229A6246234C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68AA7EC8-D7C5-4BD1-B768-229A6246234C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68AA7EC8-D7C5-4BD1-B768-229A6246234C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{68AA7EC8-D7C5-4BD1-B768-229A6246234C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{68AA7EC8-D7C5-4BD1-B768-229A6246234C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{68AA7EC8-D7C5-4BD1-B768-229A6246234C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68AA7EC8-D7C5-4BD1-B768-229A6246234C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68AA7EC8-D7C5-4BD1-B768-229A6246234C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{68AA7EC8-D7C5-4BD1-B768-229A6246234C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{68AA7EC8-D7C5-4BD1-B768-229A6246234C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
